@@ -195,11 +195,20 @@
 
         var height = 10;
         var padding = 2;
+        var r  = random(150,255);
+        var g  = random(150,255);
+        var b  = random(150,255);
+
 
         d3.select('#drawRandLine').html("");
 
         for(var i=0; i< 20 ; i++){
             var ran = random(20,300);
+
+            r = r-10;
+            g = g-10;
+            b = b-10;
+
             d3.select('#drawRandLine')
                     .append('rect')
                     .attr({
@@ -207,7 +216,7 @@
                         y:(height+padding)*i,
                         width: 0,
                         height:height,
-                        fill:'rgb('+random(0,255)+ ','+random(0,255)+','+random(0,255)+')'
+                        fill:'rgb('+ r + ','+ g  +','+ b  +')'
                     })
                     .transition()
                     .duration(random(1,1000))
