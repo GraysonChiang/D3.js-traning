@@ -61,12 +61,15 @@
         </div>
 
         <div class="col-xs-offset-1 col-xs-4 col-md-4" style="border: 1px solid white;border-radius: 10px;">
-            <svg class="d3svg" width="100%" height="200"></svg>
+            <svg class="d3svg" id="music" width="100%" height="200"></svg>
         </div>
-
-        <div class="col-xs-1">
-            <button type="button" class="btn btn-default" onclick="d3svg()">
+        <div class="col-xs-2">
+            <button type="button" class="btn btn-default" onclick="d3svg()" style="width: 100%;">
                 <span style="color: black">DRAW</span>
+            </button>
+            <h5>每次按隨機產生顏色</h5>
+            <button type="button" class="btn btn-danger" onclick="musicReset()" style="width: 100%;margin-top: 20px;">
+                <span style="color: black">CLEAR</span>
             </button>
         </div>
     </div>
@@ -88,14 +91,13 @@
             <button type="button" class="btn btn-default" onclick="musicWithBackground()" style="width: 100%;">
                 <span style="color: black">DRAW</span>
             </button>
+            <h5>每次按隨機產生顏色</h5>
+            <button type="button" class="btn btn-danger" onclick="musicWithBackgroundReset()" style="width: 100%;margin-top: 20px;">
+                <span style="color: black">CLEAR</span>
+            </button>
         </div>
     </div>
 </div>
-
-
-
-
-
 
 
 <div class="container">
@@ -113,6 +115,10 @@
         <div class="col-xs-2">
             <button type="button" class="btn btn-default" onclick="d3svg2()" style="width: 100%;">
                 <span style="color: black">DRAW</span>
+            </button>
+                <h5>每次按隨機產生顏色</h5>
+            <button type="button" class="btn btn-danger" onclick="drawLineoneReset()" style="width: 100%;margin-top: 20px;">
+                <span style="color: black">CLEAR</span>
             </button>
         </div>
     </div>
@@ -134,7 +140,7 @@
                 <span style="color: black">DRAW</span>
             </button>
             <button type="button" class="btn btn-danger" onclick="randlineReset()" style="width: 100%;margin-top: 20px;">
-                <span style="color: black">RESET</span>
+                <span style="color: black">CLEAR</span>
             </button>
         </div>
         <div class="col-xs-12" style="height: 200px"></div>
@@ -155,12 +161,34 @@
     }
 
 
+
     function randlineReset() {
 
         d3.select('#drawRandLine').html("");
 
     }
 
+
+    function drawLineoneReset() {
+
+        d3.select('.drawLine').html("");
+
+    }
+
+
+    function musicWithBackgroundReset() {
+
+        d3.select('#musicWithBackground').html("");
+
+
+    }
+
+    function musicReset() {
+
+        d3.select('#music').html("");
+
+
+    }
 
     function drawRandLine() {
 
@@ -178,7 +206,7 @@
                         y:(height+padding)*i,
                         width: ran,
                         height:height,
-                        fill:'#cedb9c'
+                        fill:'rgb('+random(0,255)+ ','+random(0,255)+','+random(0,255)+')'
                     });
             d3.select('#drawRandLine')
                     .append('text')
@@ -208,7 +236,7 @@
                         y:i*(firstWidth+height),
                         width:firstWidth*i*12,
                         height:height,
-                        fill:'#cedb9c'
+                        fill:'rgb('+random(0,255)+ ','+random(0,255)+','+random(0,255)+')'
                     });
         }
     }
@@ -225,7 +253,7 @@
                     y:0,
                     width:'100%',
                     height:500,
-                    fill:'OldLace'
+                    fill:'rgb('+random(0,255)+ ','+random(0,255)+','+random(0,255)+')'
                 });
 
         for(var i = 1 ; i <= 5 ; i++){
@@ -263,13 +291,16 @@
 
         d3.select('.d3svg').html("");
 
+        var colorr = 'rgb('+random(0,255)+ ','+random(0,255)+','+random(0,255)+')';
+
+
         d3.select('.d3svg')
                 .append('circle')
                 .attr({
                     cx:150,
                     cy:120,
                     r:15,
-                    fill:'white'
+                    fill:colorr
                 });
         d3.select('.d3svg')
                 .append('rect')
@@ -278,7 +309,7 @@
                     y:45,
                     width:5,
                     height:78,
-                    fill:'white'
+                    fill:colorr
                 });
     }
 
