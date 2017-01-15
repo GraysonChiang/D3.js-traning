@@ -139,6 +139,7 @@
             <button type="button" class="btn btn-default" onclick="drawRandLine()" style="width: 100%">
                 <span style="color: black">DRAW</span>
             </button>
+            <h5>每次按隨機產生顏色</h5>
             <button type="button" class="btn btn-danger" onclick="randlineReset()" style="width: 100%;margin-top: 20px;">
                 <span style="color: black">CLEAR</span>
             </button>
@@ -204,12 +205,21 @@
                     .attr({
                         x:0,
                         y:(height+padding)*i,
-                        width: ran,
+                        width: 0,
                         height:height,
                         fill:'rgb('+random(0,255)+ ','+random(0,255)+','+random(0,255)+')'
+                    })
+                    .transition()
+                    .duration(random(1,1000))
+                    .delay(random(1,300))
+                    .attr({
+                        width: ran
                     });
+
             d3.select('#drawRandLine')
                     .append('text')
+                    .transition()
+                    .delay(300)
                     .attr({
                         x:ran+15,
                         y:10+(height+padding)*i,
