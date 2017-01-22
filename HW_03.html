@@ -1,0 +1,383 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>D3-Practice</title>
+    <script src="https://code.jquery.com/jquery-3.1.1.js"
+            integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA="
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+
+
+<div class="container">
+    <div class="row">
+
+        <div class="col-xs-12" style="padding-top: 40px;">
+            <h1 style="text-align: center;">台大資訊系統訓練班D3.js</h1>
+            <hr>
+        </div>
+
+    </div>
+</div>
+
+
+<div class="container">
+    <div class="row" style="margin-top: 50px">
+
+        <div class="col-xs-9 context" style="border: 1px solid white;">
+            <svg id="practice2" width="100%" height="350"></svg>
+
+        </div>
+        <div class="col-xs-3">
+            <button type="button" class="btn btn-default" onclick="practice2()">
+                <span style="color: black">產生</span>
+            </button>
+            <h4>抓取csv/json內檔案，篩選後輸出</h4>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="container">
+    <div class="row" style="margin-top: 50px;">
+        <div class="col-xs-9 body context" style="border: 1px solid white;">
+            <div id="practice"></div>
+        </div>
+        <div class="col-xs-3">
+            <h4>抓取陣列中大於70元素，顏色更改為紅色</h4>
+        </div>
+
+    </div>
+</div>
+
+
+<div class="container">
+    <div class="row" style="margin-top: 50px;margin-bottom: 100px;">
+
+        <div class="col-xs-9" id="draw-area" style="border: 1px solid white"></div>
+
+        <div class="col-xs-3">
+            <button type="button" class="btn btn-default" onclick="shiftaa();">
+                <span style="color: black">
+                    shift
+                </span>
+            </button>
+
+            <button type="button" class="btn btn-default" onclick="unshiftaa();">
+                <span style="color: black">
+                    unshift
+                </span>
+            </button>
+
+
+
+
+            <button type="button" class="btn btn-default" onclick="newData();">
+                <span style="color: black">
+                    push
+                </span>
+            </button>
+
+            <button type="button" class="btn btn-default" onclick="delData();">
+                <span style="color: black">
+                    pop
+                </span>
+            </button>
+
+        </div>
+    </div>
+</div>
+
+
+</body>
+
+<script>
+
+
+    var arr = [];
+
+
+
+    for(var i =0 ; i < 10 ; i++){
+
+        arr.push(random(1,100));
+    }
+
+
+    var height = 300;
+
+    var width = '100%';
+
+
+    bind(arr);
+
+    render();
+
+    //=======================================
+
+    svgDefine(width, height);
+
+    bindTWO(arr);
+
+    renderTWO();
+
+    //=======================================
+
+
+    var padding = 20;
+
+
+    function random(n, m) {
+
+        return Math.ceil(Math.random() * (m - n) + n);
+    }
+
+
+    function newData() {
+
+        var number = random(50, 100);
+        arr.push(number);
+
+        bindTWO(arr);
+
+        renderTWO();
+
+    }
+
+
+    function unshiftaa() {
+
+        var number = random(50, 100);
+
+        arr.unshift(number);
+
+        bindTWO(arr);
+
+        renderTWO();
+    }
+
+
+    function delData() {
+
+        arr.pop();
+
+        bindTWO(arr);
+
+        renderTWO();
+
+    }
+
+
+    function shiftaa() {
+
+        arr.shift();
+
+        bindTWO(arr);
+
+        renderTWO();
+
+    }
+
+
+
+    function svgDefine(width, height) {
+
+        d3.select('#draw-area')
+                .append('svg')
+                .attr({
+                    width: width,
+                    height: height
+                });
+
+    }
+
+
+    function bindTWO(dataset) {
+
+        var selection = d3.select('#draw-area')
+                .select('svg')
+                .selectAll('rect')
+                .data(dataset);
+
+        selection.enter().append('rect');
+
+        selection.exit().remove();
+
+
+        var selection_t = d3.select('#draw-area')
+                .select('svg')
+                .selectAll('text')
+                .data(dataset);
+
+        selection_t.enter().append('text');
+
+        selection_t.exit().remove();
+
+
+    }
+
+    function renderTWO() {
+
+        d3.select('#draw-area')
+                .select('svg')
+                .selectAll('rect')
+                .attr({
+                    x: function (d, i) {
+                        return 42 * i;
+                    },
+                    y: function (d, i) {
+
+                        return height - d - 30;
+                    },
+                    width: 40,
+                    height: function (d) {
+                        return d;
+                    },
+                    fill: function (d) {
+
+                        if (d > 70) {
+                            return 'red';
+                        }
+                        else
+                            return 'white';
+                    }
+                });
+
+        d3.select('#draw-area')
+                .select('svg')
+                .selectAll('text')
+                .attr({
+                    x: function (d, i) {
+
+                        return 42 * i +10;
+                    },
+                    y: function (d, i) {
+
+                        return height ;
+                    },
+                    'font-size': '14px',
+                    'font-family': 'arial',
+                    fill: 'White'
+                }).text(function (d) {
+            return d;
+        });
+
+
+
+    }
+
+    function practice2() {
+
+
+        d3.select('#practice2').html("");
+
+
+        d3.json('sourceData/invoice-taipei.json', function (dataset) {
+
+            var j = 0;
+
+            for (var i = 0; i < dataset.length; i++) {
+
+                if (+dataset[i].amount > 1000000000 && dataset[i].cid == 'A' && dataset[i].date === '2016/8/1') {
+
+                    j++;
+
+                    d3.select('#practice2')
+                            .append('text')
+                            .attr({
+                                x:0,
+                                y:j*25 +30,
+                                'font-size':'16px',
+                                'font-family':'arial',
+                                fill:'white'
+
+                            })
+                            .text(dataset[i].industry);
+
+                    d3.select('#practice2')
+                            .append('rect')
+                            .attr({
+                                x: 300,
+                                y: j*25+15,
+                                width: dataset[i].amount / 100000000,
+                                height:15,
+                                fill: 'white'
+                            });
+
+                }
+            }
+
+        });
+
+    }
+
+    //========================================
+
+
+    function bind(dataset) {
+
+        var selection = d3.select('#practice')
+                .selectAll('div')
+                .data(dataset);
+
+        selection.enter().append('div');
+
+        selection.exit().remove();
+
+    }
+
+    function render() {
+
+        d3.select('#practice')
+                .selectAll('div')
+                .text(function (d, j) {
+                    return j + ':' + d;
+                }).style({
+            color: function (d) {
+
+                if (d < 70) {
+                    return 'red';
+                }
+                else {
+                    return 'white';
+                }
+
+            },
+            'font-size': '20px'
+        });
+    }
+
+
+</script>
+
+
+<style>
+    body {
+        background: linear-gradient(-90deg, #753CFF, #44C0FF);
+    }
+
+    hr {
+        border-color: white;
+    }
+
+    h1, h2, h3, h4, h5, h6, span, p {
+        font-family: Helvetica, Noto Sans CJK TC;
+        font-weight: 300;
+        color: white;
+        text-align: left;
+    }
+
+</style>
+
+</html>
