@@ -53,7 +53,8 @@
 
     svg();
 
-    d3.csv("invoice.csv", function (dataSet) {
+
+    d3.csv("sourceData/invoice.csv", function (dataSet) {
         bind(dataSet);
         render(dataSet);
         btnList(dataSet);
